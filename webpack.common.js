@@ -1,9 +1,9 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 module.exports = {
 	entry: "./src/index.tsx",
-	devtool: "inline-source-map",
 	module: {
 		rules: [
 			{
@@ -21,9 +21,18 @@ module.exports = {
 					loader: "html-loader",
 				},
 			},
+			{
+				test: /\.css$/,
+				use: ["style-loader", "css-loader"],
+			},
+			{
+				test: /\.(jpg|gif|png|svg)$/,
+				use: ["file-loader"],
+			},
 		],
 	},
 	plugins: [
+		new CleanWebpackPlugin(),
 		new HtmlWebpackPlugin({
 			template: "./src/index.html",
 			filename: "./index.html",
